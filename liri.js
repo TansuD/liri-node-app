@@ -10,22 +10,22 @@ var spotify = new Spotify(keys.spotify);
 var command = process.argv[2];
 var input = process.argv[3];
 
-if (command == "concert-this") {
-    var bisURL = "https://rest.bandsintown.com/artists/" + input + "/events?app_id=trilogy";
-    request(bisURL, function (error, response, body) {
+if (command === "concert-this") {
+    var bandsURL = "https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp";
+
+    request(bandsURL, function (error, response, body) {
         if (!error && response.statusCode === 200) {
             var output = JSON.parse(body);
             for (i = 0; i < output.length; i++) {
                 console.log("Venue: " + output[i].venue.name);
                 console.log("Location: " + output[i].venue.city + ", " + output[i].venue.region);
                 console.log("Date: " + moment(output[i].datetime).format("MM/DD/YYYY"));
-                console.log(" ");
             }
         }
     })
 }
 
-else if (command == "spotify-this-song") {
+else if (command === "spotify-this-song") {
     if (input === undefined) {
         console.log("Artist: Shakira");
     }
@@ -50,7 +50,7 @@ else if (command == "spotify-this-song") {
     }
 }
 
-else if (command == "movie-this") {
+else if (command === "movie-this") {
     if (input === undefined) {
         console.log("Title: The Lion King");
     }
@@ -78,7 +78,7 @@ else if (command == "movie-this") {
     }
 }
 
-else if (command == "do-what-it-says") {
+else if (command === "do-what-it-says") {
     fs.readFile("random.txt", "utf8", function (error, data) {
 
         if (error) {
@@ -87,9 +87,9 @@ else if (command == "do-what-it-says") {
 
         var dataArr = data.split(",");
 
-        if (dataArr[0] == "concert-this") {
-            var bisURL = "https://rest.bandsintown.com/artists/" + dataArr[1] + "/events?app_id=trilogy";
-            request(bisURL, function (error, response, body) {
+        if (dataArr[0] === "concert-this") {
+            var bandsURL = "https://rest.bandsintown.com/artists/" + dataArr[1] + "/events?app_id=codingbootcamp";
+            request(bandsURL, function (error, response, body) {
                 if (!error && response.statusCode === 200) {
                     var output = JSON.parse(body);
                     for (i = 0; i < output.length; i++) {
@@ -102,7 +102,7 @@ else if (command == "do-what-it-says") {
             })
         }
 
-        else if (dataArr[0] == "spotify-this-song") {
+        else if (dataArr[0] === "spotify-this-song") {
             if (dataArr[1] === undefined) {
                 console.log("Artist: Shakira");
             }
@@ -127,7 +127,7 @@ else if (command == "do-what-it-says") {
             }
         }
 
-        else if (command == "movie-this") {
+        else if (command === "movie-this") {
             if (dataArr[0] === undefined) {
                 console.log("Title: The Lion King");
             }
